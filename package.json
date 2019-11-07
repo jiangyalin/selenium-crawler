@@ -1,0 +1,16 @@
+{
+  "name": "selenium-crawler",
+  "version": "0.0.1",
+  "main": "server.js",
+  "author": "jiang",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node main.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "chromedriver": "^78.0.1",
+    "jszip": "^3.2.2",
+    "selenium-webdriver": "^4.0.0-alpha.5"
+  }
+}
