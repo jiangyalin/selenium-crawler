@@ -1,2 +1,2 @@
 # selenium-crawler
-基于selenium得node爬虫
+基于selenium的node爬虫
