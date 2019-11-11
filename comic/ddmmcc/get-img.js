@@ -36,7 +36,7 @@ let i = 100000
 const main = (res, name) => {
   console.log('name', name)
   i++
-  fs.writeFileSync('./file/word/' + name + '.jpg', res.body)
+  fs.writeFileSync('./file/' + JSON.parse(updatedList).bookName + '/' + name + '.jpg', res.body)
 }
 
 
