@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "chromedriver": "^78.0.1",
+    "crawler": "^1.2.1",
     "jszip": "^3.2.2",
     "selenium-webdriver": "^4.0.0-alpha.5"
   }
