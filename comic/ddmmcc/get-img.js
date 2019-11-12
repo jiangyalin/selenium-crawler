@@ -1,11 +1,11 @@
 const fs = require('fs')
 const Crawler = require('crawler')
 
-const updatedList = fs.readFileSync('./list.json', 'utf8')
+const updatedList = JSON.parse(fs.readFileSync('./list.json', 'utf8'))
 
-const node = JSON.parse(updatedList).node
-const map = {}
-fs.mkdirSync('./file/' + JSON.parse(updatedList).bookName)
+const node = updatedList.node
+// 创建文件夹
+if (!fs.existsSync('./file/' + updatedList.bookName)) fs.mkdirSync('./file/' + updatedList.bookName)
 
 let crawler = new Crawler({
   encoding: null, // 编码
@@ -36,7 +36,7 @@ let i = 100000
 const main = (res, name) => {
   console.log('name', name)
   i++
-  fs.writeFileSync('./file/' + JSON.parse(updatedList).bookName + '/' + name + '.jpg', res.body)
+  fs.writeFileSync('./file/' + updatedList.bookName + '/' + name + '.jpg', res.body)
 }
 
 

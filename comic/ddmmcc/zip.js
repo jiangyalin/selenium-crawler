@@ -39,13 +39,13 @@ getProjectAll().forEach(node => {
 
   filesList.forEach(item => {
     const _path = item.fullPath.substring(item.fullPath.indexOf(node.path) + node.path.length)
-    zip.file(_path, fs.readFileSync(item.fullPath, { encoding: 'utf-8' }))
+    zip.file(_path, fs.readFileSync(item.fullPath))
   })
 
   zip.generateNodeStream({
     type: 'nodebuffer',
     streamFiles: true
-  }).pipe(fs.createWriteStream(node.name + '.zip')).on('finish', () => {
+  }).pipe(fs.createWriteStream('./file/' + node.name + '.zip')).on('finish', () => {
     console.log(node.name + '.zip')
   })
 })
