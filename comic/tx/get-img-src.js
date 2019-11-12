@@ -1,6 +1,6 @@
 const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
-const _path = require('chromedriver').path
+const _path = require('chromedriver').path // 必要，不能删除
 const path = require('path')
 const fs = require('fs')
 

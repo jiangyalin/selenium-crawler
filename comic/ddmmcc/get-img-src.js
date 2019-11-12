@@ -1,16 +1,15 @@
 const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
-const path = require('chromedriver').path
+const path = require('chromedriver').path // 必要，不能删除
 const fs = require('fs')
 const config = require('./config').akb49
 
 const url = config.url
 
 async function example() {
-  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless().setMobileEmulation({deviceName: 'iPhone X'})).build()
+  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless().setMobileEmulation({ deviceName: 'iPhone X' })).build()
   const list = []
   try {
-    // await driver.get('http://www.baidu.com')
     await driver.get(url)
     let index = 100000
     for (let j = 0; j < 1000; j++) {
