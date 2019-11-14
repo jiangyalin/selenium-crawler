@@ -22,3 +22,6 @@
 
 // 终止浏览器会话
 // driver.quit()
+
+// 等待
+// await driver.sleep(5000)

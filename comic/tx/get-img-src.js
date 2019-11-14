@@ -7,7 +7,7 @@ const config = require('./config').one
 const url = config.url
 
 async function example() {
-  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
+  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless().setMobileEmulation({ deviceName: 'iPhone X' })).build()
   const list = []
   try {
     await driver.get(url)
