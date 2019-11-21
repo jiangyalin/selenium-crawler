@@ -1,8 +1,6 @@
 const fs = require('fs')
 const jsDom = require('jsdom').JSDOM
 const jquery = require('jquery')
-// console.log('list', list)
-// console.log('table', $('.main-content [log-set-param="table_view"]').eq(6).html())
 
 module.exports = () => {
   const html = fs.readFileSync('./index.html', 'utf8')
