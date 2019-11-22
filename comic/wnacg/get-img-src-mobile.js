@@ -34,9 +34,10 @@ async function example() {
     // await driver.get('https://m.wnacg.org/photos-index-aid-' + list[0].id + '.html') // /photos-slide-aid-89227.html
 
     console.log('正常结束')
+    driver.quit()
   } finally {
     console.log('异常结束')
-    // driver.quit()
+    driver.quit()
   }
 }
 

@@ -29,7 +29,7 @@ async function example() {
       })
     }
     list.forEach(item => {
-      // console.log('item', item)
+      console.log('item', item)
     })
     console.log('list[0]', list[0])
     await driver.get('https://m.wnacg.org/photos-index-aid-' + list[0].id + '.html') // /photos-slide-aid-89227.html
