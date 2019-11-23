@@ -9,7 +9,7 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "chromedriver": "^78.0.1",
+    "chromedriver": "^77.0.0",
     "crawler": "^1.2.1",
     "jquery": "^3.4.1",
     "jsdom": "^15.2.1",
