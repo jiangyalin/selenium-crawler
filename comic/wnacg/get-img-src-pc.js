@@ -8,7 +8,7 @@ const url = config.url
 // const url = 'https://m.wnacg.org/albums-index-page-25-sname-%E7%84%A1%E9%82%AA%E6%B0%97%E6%BC%A2%E5%8C%96.html'
 
 async function example() {
-  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless().setMobileEmulation({ deviceName: 'iPhone X' })).build()
+  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().setMobileEmulation({ deviceName: 'iPhone X' })).build()
   const html = await driver.getPageSource()
   console.log('html', html)
   const list = []
@@ -32,14 +32,14 @@ async function example() {
       console.log('item', item)
     })
     console.log('list[0]', list[0])
-    await driver.get('https://m.wnacg.org/photos-index-aid-' + list[0].id + '.html') // /photos-slide-aid-89227.html
+    await driver.get('https://m.wnacg.org/photos-slide-aid-' + list[0].id + '.html') // /photos-slide-aid-89227.html
     console.log('aaa', await driver.findElement(By.css('.cc li')))
 
     console.log('正常结束')
-    driver.quit()
+    // driver.quit()
   } finally {
     console.log('异常结束')
-    driver.quit()
+    // driver.quit()
   }
 }
 
