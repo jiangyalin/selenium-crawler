@@ -9,7 +9,7 @@ const key = config.key
 // const url = 'https://m.wnacg.org/albums-index-page-25-sname-%E7%84%A1%E9%82%AA%E6%B0%97%E6%BC%A2%E5%8C%96.html'
 
 async function example() {
-  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build()
+  const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
   const list = []
   try {
     for (let n = 1; n < 999; n++) {
