@@ -66,9 +66,8 @@ async function example() {
       }))
     }
 
-    console.log('aaa', list)
     console.log('正常结束')
-    // driver.quit()
+    driver.quit()
     fs.writeFileSync('./list.json', JSON.stringify({
       tips: '章节',
       bookName: config.name,
@@ -76,7 +75,7 @@ async function example() {
     }))
   } finally {
     console.log('异常结束')
-    // driver.quit()
+    driver.quit()
     fs.writeFileSync('./list.json', JSON.stringify({
       tips: '章节',
       bookName: config.name,
