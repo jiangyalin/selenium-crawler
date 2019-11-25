@@ -59,24 +59,24 @@ async function example() {
         list.push(item)
       })
 
-      save()
+      save(list)
     }
 
     console.log('正常结束')
     driver.quit()
-    save()
+    save(list)
   } finally {
     console.log('异常结束')
     driver.quit()
-    save()
+    save(list)
   }
 }
 
-const save = () => {
+const save = node => {
   fs.writeFileSync('./list.json', JSON.stringify({
     tips: '章节',
     bookName: config.name,
-    node: list
+    node: node
   }))
 }
 
