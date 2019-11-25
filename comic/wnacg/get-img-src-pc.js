@@ -59,29 +59,25 @@ async function example() {
         list.push(item)
       })
 
-      fs.writeFileSync('./list.json', JSON.stringify({
-        tips: '章节',
-        bookName: config.name,
-        node: list
-      }))
+      save()
     }
 
     console.log('正常结束')
     driver.quit()
-    fs.writeFileSync('./list.json', JSON.stringify({
-      tips: '章节',
-      bookName: config.name,
-      node: list
-    }))
+    save()
   } finally {
     console.log('异常结束')
     driver.quit()
-    fs.writeFileSync('./list.json', JSON.stringify({
-      tips: '章节',
-      bookName: config.name,
-      node: list
-    }))
+    save()
   }
+}
+
+const save = () => {
+  fs.writeFileSync('./list.json', JSON.stringify({
+    tips: '章节',
+    bookName: config.name,
+    node: list
+  }))
 }
 
 example()
