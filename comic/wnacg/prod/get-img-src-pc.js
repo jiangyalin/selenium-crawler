@@ -68,6 +68,8 @@ async function example() {
       }
       _list.forEach(item => {
         list.push(item)
+        const getList = fs.readFileSync('./date/' + item.date + '.json', 'utf8')
+        console.log('getList', getList)
         // save(_list, _list.date)
       })
 
@@ -95,9 +97,9 @@ const checkIsPresence = async (driver, element) => {
 }
 
 const save = (node, name) => {
-  fs.writeFileSync('./' + name + '.json', JSON.stringify({
+  fs.writeFileSync('./date/' + name + '.json', JSON.stringify({
     tips: '章节',
-    bookName: config.name,
+    name: name,
     node: node
   }))
 }
