@@ -1,7 +1,8 @@
 const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const path = require('chromedriver').path // 必要，不能删除
-const fs = require('fs')
+const save = require('./add-json')
+// const fs = require('fs')
 const config = require('./config').wxq
 
 // const url = config.url
@@ -25,6 +26,7 @@ async function example() {
           const src = await driver.findElement(By.css('.cc li:nth-of-type(' + (i + 1) + ') .pic_box a')).getAttribute('href')
           const id = src.substring(src.lastIndexOf('-') + 1, src.lastIndexOf('.'))
           const size = Number(info.substring(0, info.lastIndexOf('張')))
+          const date = info.substring(info.lastIndexOf('於') + 1)
           _list.push({
             title,
             cover,
@@ -32,6 +34,7 @@ async function example() {
             src,
             id,
             size,
+            date,
             node: []
           })
         }
@@ -64,20 +67,21 @@ async function example() {
         }
       }
       _list.forEach(item => {
+        save(item.date, item, item.title)
         list.push(item)
       })
 
-      save(list)
+      // save(list)
       // n = 9999
     }
 
     console.log('正常结束')
     driver.quit()
-    save(list)
+    // save(list)
   } finally {
     console.log('异常结束')
     driver.quit()
-    save(list)
+    // save(list)
   }
 }
 
@@ -91,12 +95,12 @@ const checkIsPresence = async (driver, element) => {
   }
 }
 
-const save = node => {
-  fs.writeFileSync('./list.json', JSON.stringify({
-    tips: '章节',
-    bookName: config.name,
-    node: node
-  }))
-}
+// const save = node => {
+//   fs.writeFileSync('./list.json', JSON.stringify({
+//     tips: '章节',
+//     bookName: config.name,
+//     node: node
+//   }))
+// }
 
 example()
