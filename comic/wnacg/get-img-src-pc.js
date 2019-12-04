@@ -1,8 +1,8 @@
 const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
+const moment = require('moment')
 const path = require('chromedriver').path // 必要，不能删除
 const save = require('./add-json')
-// const fs = require('fs')
 const config = require('./config').wxq
 
 // const url = config.url
@@ -26,7 +26,7 @@ async function example() {
           const src = await driver.findElement(By.css('.cc li:nth-of-type(' + (i + 1) + ') .pic_box a')).getAttribute('href')
           const id = src.substring(src.lastIndexOf('-') + 1, src.lastIndexOf('.'))
           const size = Number(info.substring(0, info.lastIndexOf('張')))
-          const date = info.substring(info.lastIndexOf('於') + 1)
+          const date = moment(info.substring(info.lastIndexOf('創建於') + 3)).format('YYYY-MM-DD')
           _list.push({
             title,
             cover,
