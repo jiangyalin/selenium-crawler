@@ -2,12 +2,10 @@ const {Builder, By, Key, until} = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const moment = require('moment')
 const path = require('chromedriver').path // 必要，不能删除
-const fs = require('fs')
+const save = require('./add-json')
 const config = require('./config').wxq
 
-// const url = config.url
 const key = config.key
-// const url = 'https://m.wnacg.org/albums-index-page-25-sname-%E7%84%A1%E9%82%AA%E6%B0%97%E6%BC%A2%E5%8C%96.html'
 
 async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
@@ -18,7 +16,6 @@ async function example() {
       const _list = []
       await driver.get(url)
       for (let i = 0; i < 12; i++) {
-      // for (let i = 0; i < 1; i++) {
         if (await checkIsPresence(driver, '.cc li:nth-of-type(' + (i + 1) + ') img')) {
           const title = await driver.findElement(By.css('.cc li:nth-of-type(' + (i + 1) + ') .title a')).getText()
           const cover = await driver.findElement(By.css('.cc li:nth-of-type(' + (i + 1) + ') img')).getAttribute('src')
@@ -40,7 +37,7 @@ async function example() {
         }
       }
       _list.forEach(item => {
-        console.log('item', item)
+        // console.log('item', item)
       })
       // 获取每一组
       for (let k = 0; k < _list.length; k++) {
@@ -67,12 +64,11 @@ async function example() {
         }
       }
       _list.forEach(item => {
+        save(item.date, item, item.title)
         list.push(item)
-        const getList = fs.readFileSync('./date/' + item.date + '.json', 'utf8')
-        console.log('getList', getList)
-        // save(_list, _list.date)
       })
 
+      // save(list)
       // n = 9999
     }
 
@@ -96,12 +92,12 @@ const checkIsPresence = async (driver, element) => {
   }
 }
 
-const save = (node, name) => {
-  fs.writeFileSync('./date/' + name + '.json', JSON.stringify({
-    tips: '章节',
-    name: name,
-    node: node
-  }))
-}
+// const save = node => {
+//   fs.writeFileSync('./list.json', JSON.stringify({
+//     tips: '章节',
+//     bookName: config.name,
+//     node: node
+//   }))
+// }
 
 example()
