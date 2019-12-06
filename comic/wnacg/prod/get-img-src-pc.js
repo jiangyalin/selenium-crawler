@@ -5,13 +5,14 @@ const path = require('chromedriver').path // 必要，不能删除
 const save = require('./add-json')
 const config = require('./config').wxq
 
-const key = config.key
+// const key = config.key
+const key = ''
 
 async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
   const list = []
   try {
-    for (let n = 1; n < 999; n++) {
+    for (let n = 100; n < 999; n++) {
       const url = 'https://www.wnacg.org/?ctl=albums&page=' + n + '&sname=' + key
       const _list = []
       await driver.get(url)
@@ -37,7 +38,7 @@ async function example() {
         }
       }
       _list.forEach(item => {
-        // console.log('item', item)
+        console.log('item', item.date)
       })
       // 获取每一组
       for (let k = 0; k < _list.length; k++) {
@@ -58,8 +59,12 @@ async function example() {
             }
           }
           if (i < Math.ceil(_list[k].size / 12) - 1) {
-            const next = await driver.findElement(By.css('span.next a')).getAttribute('href')
-            await driver.get(next)
+            if (await checkIsPresence(driver, 'span.next a')) {
+              const next = await driver.findElement(By.css('span.next a')).getAttribute('href')
+              await driver.get(next)
+            } else {
+              i = Math.ceil(_list[k].size / 12)
+            }
           }
         }
       }
@@ -67,18 +72,13 @@ async function example() {
         save(item.date, item, item.title)
         list.push(item)
       })
-
-      // save(list)
-      // n = 9999
     }
 
     console.log('正常结束')
     driver.quit()
-    // save(list)
   } finally {
     console.log('异常结束')
     driver.quit()
-    // save(list)
   }
 }
 
@@ -91,13 +91,5 @@ const checkIsPresence = async (driver, element) => {
     return false
   }
 }
-
-// const save = node => {
-//   fs.writeFileSync('./list.json', JSON.stringify({
-//     tips: '章节',
-//     bookName: config.name,
-//     node: node
-//   }))
-// }
 
 example()
