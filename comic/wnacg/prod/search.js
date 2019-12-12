@@ -19,11 +19,10 @@ const search = (condition = [], showImg = false, isRedundancy = false) => {
         node: showImg ? item.node : null
       }
     }))
-    console.log('max', max)
     fs.writeFileSync('./data/search.json', JSON.stringify({ tips: '', bookName: '', node }))
   }
 
   return node
 }
 
-console.log('search([\'Hamao\'])', search(['無邪気']).length)
+console.log('search([\'Hamao\'])', search([]).length)

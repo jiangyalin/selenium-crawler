@@ -12,7 +12,7 @@ async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
   const list = []
   try {
-    for (let n = 100; n < 999; n++) {
+    for (let n = 2280; n < 9999; n++) {
       const url = 'https://www.wnacg.org/?ctl=albums&page=' + n + '&sname=' + key
       const _list = []
       await driver.get(url)
@@ -33,6 +33,7 @@ async function example() {
             id,
             size,
             date,
+            isStorage: false,
             node: []
           })
         }
@@ -68,6 +69,7 @@ async function example() {
           }
         }
       }
+      console.log('page', n)
       _list.forEach(item => {
         save(item.date, item, item.title)
         list.push(item)
@@ -75,7 +77,6 @@ async function example() {
     }
 
     console.log('正常结束')
-    driver.quit()
   } finally {
     console.log('异常结束')
     driver.quit()
