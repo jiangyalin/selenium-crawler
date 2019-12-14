@@ -3,12 +3,14 @@ const router = express.Router();
 const clean = require('./../clean');
 
 router.get('/', function (req, res) {
-  console.log('get.query', req.query)
-  console.log('get.params', req.params)
-  console.log('req.headers.languagecode', req.headers.languagecode)
+  const id = req.query.id
+  const date = req.query.date
   const data = {
-    'total': 'd',
-    'rows': 'p'
+    code: 200,
+    data: {
+      id,
+      date
+    }
   }
   res.jsonp(data)
 })
