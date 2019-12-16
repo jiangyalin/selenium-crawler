@@ -5,7 +5,7 @@ const clean = require('./../clean');
 // 获取列表数据
 router.get('/', function (req, res) {
   const data = {
-    data: clean.get().map(item => {
+    data: clean.getAll().map(item => {
       return {
         ...item,
         title: item.title.substring(0, 1) + '这是测试数据这是测试数据这是测试数据这是测试数据这是测试数据',

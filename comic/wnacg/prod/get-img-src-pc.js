@@ -3,16 +3,14 @@ const chrome = require('selenium-webdriver/chrome')
 const moment = require('moment')
 const path = require('chromedriver').path // 必要，不能删除
 const save = require('./add-json')
-const config = require('./config').wxq
 
-// const key = config.key
 const key = ''
 
 async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
   const list = []
   try {
-    for (let n = 2770; n < 9999; n++) {
+    for (let n = 3540; n < 9999; n++) {
       const url = 'https://www.wnacg.org/?ctl=albums&page=' + n + '&sname=' + key
       const _list = []
       await driver.get(url)

@@ -1,11 +1,19 @@
 const fs = require('fs')
-const path = './data/all.json'
+let path = __dirname + './../../comic/wnacg/prod/data/search.json'
 
 module.exports = {
-  get: () => {
-    if (fs.existsSync(path)) {
-      return JSON.parse(fs.readFileSync(path, 'utf8')).node
+  get: (id, date = null) => {
+    if (date) {
+      path = __dirname + './../../comic/wnacg/prod/data/' + date + '.json'
+      if (fs.existsSync(path)) {
+        let node = JSON.parse(fs.readFileSync(path, 'utf8')).node
+        node = node.find(item => item.id === id)
+        return node
+      }
     }
+  },
+  getAll: () => {
+    return JSON.parse(fs.readFileSync(path, 'utf8')).node
   },
   set: node => {
     if (fs.existsSync(path)) {
