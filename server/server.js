@@ -4,7 +4,7 @@ const app = express()
 const routes = require('./routes/')
 const bodyParser = require('body-parser')
 
-app.use(express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, './../comic/wnacg/prod/book')))
 
 app.use(bodyParser.json({ limit: '50mb' })) // 设置最大提交值
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))

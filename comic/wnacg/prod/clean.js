@@ -9,7 +9,8 @@ for (let i = 0; i < 5000; i ++) {
     list.node = list.node.map(item => {
       return {
         ...item,
-        isStorage: false
+        isStorage: false,
+        localName: ''
       }
     })
     fs.writeFileSync(path, JSON.stringify(list))

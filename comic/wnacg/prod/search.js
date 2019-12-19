@@ -6,6 +6,7 @@ const search = (condition = [], showImg = false, isRedundancy = false) => {
   const node = []
   let max = 0
   for (let i = 0; i < 5000; i ++) {
+    console.log('i', i)
     const path = './data/' + moment().add(-i, 'days').format('YYYY-MM-DD') + '.json'
     let list = { node: [] }
     if (fs.existsSync(path)) list = JSON.parse(fs.readFileSync(path, 'utf8'))
@@ -19,10 +20,12 @@ const search = (condition = [], showImg = false, isRedundancy = false) => {
         node: showImg ? item.node : null
       }
     }))
-    fs.writeFileSync('./data/search.json', JSON.stringify({ tips: '', bookName: '', node }))
   }
+  fs.writeFileSync('./data/search.json', JSON.stringify({ tips: '', bookName: '', node }))
 
   return node
 }
 
-console.log('search([\'Hamao\'])', search([]).length)
+module.exports = search
+
+// console.log('search([\'Hamao\'])', search([]).length)

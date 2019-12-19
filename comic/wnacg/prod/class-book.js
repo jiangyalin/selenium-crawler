@@ -1,5 +1,5 @@
 // 实体类
-function book(title, cover, info, src, id, size, date, node, isStorage) {
+function book(title, cover, info, src, id, size, date, node, isStorage, localName) {
   this.title = title || '' // 原文标题
   this.cover = cover || '' // 封面
   this.info = info || '' // 原文辅助信息
@@ -9,6 +9,7 @@ function book(title, cover, info, src, id, size, date, node, isStorage) {
   this.date = date || '' // 上传日期
   this.node = node || [] // 内容详情
   this.isStorage = isStorage || false // 是否已保存到本地
+  this.localName = localName || '' // 本地文件名
 }
 
 module.exports = book

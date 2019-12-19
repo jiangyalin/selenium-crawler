@@ -6,4 +6,6 @@ module.exports = app => {
   app.use(bodyParser.json()) // 解析参数
 
   app.use('/api', require('./api'))
+
+  // app.use('/img', require('./static'))
 }

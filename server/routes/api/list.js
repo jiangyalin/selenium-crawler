@@ -9,7 +9,8 @@ router.get('/', function (req, res) {
       return {
         ...item,
         title: item.title.substring(0, 1) + '这是测试数据这是测试数据这是测试数据这是测试数据这是测试数据',
-        cover: 'http://preapiconsole.71360.com/file/read/www/M00/00/0B/wKgBbF2yUMKAdpDMAAQJhP1oO1Q130.jpg'
+        cover: 'http://localhost:8088/test-01.jpg',
+        // cover: 'http://preapiconsole.71360.com/file/read/www/M00/00/0B/wKgBbF2yUMKAdpDMAAQJhP1oO1Q130.jpg'
       }
     })
   }
