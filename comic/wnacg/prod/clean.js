@@ -7,13 +7,17 @@ for (let i = 0; i < 5000; i ++) {
   if (fs.existsSync(path)) {
     let list = JSON.parse(fs.readFileSync(path, 'utf8'))
     list.node = list.node.map(item => {
-      return {
+      const _item = {
         ...item,
         isStorage: false,
         localName: '',
         isDown: false,
-        isOriginalIme: false
+        isOriginalIme: false,
+        downArr: [],
+        downSrc: ''
       }
+      delete _item.downArr
+      return _item
     })
     fs.writeFileSync(path, JSON.stringify(list))
   }
