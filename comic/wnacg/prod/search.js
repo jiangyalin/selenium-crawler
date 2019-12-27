@@ -5,10 +5,10 @@ const moment = require('moment')
 const search = (condition = [], showImg = false, isRedundancy = false) => {
   const node = []
   let max = 0
-  for (let i = 0; i < 5000; i ++) {
+  for (let i = 0; i < 5000; i++) {
     console.log('i', i)
     const path = './data/' + moment().add(-i, 'days').format('YYYY-MM-DD') + '.json'
-    let list = { node: [] }
+    let list = {node: []}
     if (fs.existsSync(path)) list = JSON.parse(fs.readFileSync(path, 'utf8'))
     node.push(...list.node.filter(item => {
       if (!isRedundancy) return condition.filter(node => item.title.indexOf(node) === -1).length === 0
@@ -21,11 +21,26 @@ const search = (condition = [], showImg = false, isRedundancy = false) => {
       }
     }))
   }
-  fs.writeFileSync('./data/search.json', JSON.stringify({ tips: '', bookName: '', node }))
+  fs.writeFileSync('./data/search.json', JSON.stringify({tips: '', bookName: '', node}))
 
   return node
 }
 
+
+
+
+
 module.exports = search
 
+const nameList = ['無邪気漢化']
+// const nameList = ['愛上陸', 'よこしま日記', 'あきのそら', '由浦カズヤ', '鉢本', 'ひし形とまる', '黒木秀彦', 'あとり秋尚', '黒青郎君', '舞六まいむ', '笹森卜モエ', 'じよろり', '牡丹もちと', '吉田鳶牡', '杜拓哉', '華容道', '多摩豪', '幾花にいろ']
+
+// console.log(search(nameList, true, true).length)
+
+
+// 愛上陸,よこしま日記，あきのそら，由浦カズヤ，鉢本，ひし形とまる，黒木秀彦，あとり秋尚，黒青郎君，
+// 舞六まいむ，笹森卜モエ，じよろり，牡丹もちと，吉田鳶牡，杜拓哉，華容道，多摩豪，幾花にいろ
+// おかゆさん，ぎんハハ，ほ一すている，70年式悠久機閨，なばた，三色坊，世徒ゆうき，柚木，ホ厶ンクルス
+// きい，無邪気漢化，才クモ卜悠太，立花才ミナ，曰吉ハナ，瀬奈陽太郎，竜太，逢坂ミナミ
+// 雛眹葉，東山翔，田中エキス，屋ひぐま屋，山田太郎，雛原えみ，美矢火，幾花にいろ
 // console.log('search([\'Hamao\'])', search([]).length)

@@ -52,8 +52,8 @@ const zip = () => {
   })
 }
 
-// module.exports = zip
+module.exports = zip
 
 // 获取所有文件夹
-console.log('fs.readdirSync(dir)', zip())
+// console.log('fs.readdirSync(dir)', zip())
 

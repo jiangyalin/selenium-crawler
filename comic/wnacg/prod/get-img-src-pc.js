@@ -10,7 +10,7 @@ async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
   const list = []
   try {
-    for (let n = 5661; n < 9999; n++) {
+    for (let n = 6689; n < 9999; n++) {
       const url = 'https://www.wnacg.org/?ctl=albums&page=' + n + '&sname=' + key
       const _list = []
       await driver.get(url)

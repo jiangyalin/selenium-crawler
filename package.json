@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "body-parser": "^1.19.0",
-    "chromedriver": "^77.0.0",
+    "chromedriver": "^79.0.0",
     "crawler": "^1.2.1",
     "express": "^4.17.1",
     "jquery": "^3.4.1",
@@ -19,6 +19,8 @@
     "jszip": "^3.2.2",
     "moment": "^2.24.0",
     "node-xlsx": "^0.15.0",
-    "selenium-webdriver": "^4.0.0-alpha.5"
+    "selenium-webdriver": "^4.0.0-alpha.5",
+    "set-immediate-shim": "^2.0.0",
+    "tcp-port-used": "^1.0.1"
   }
 }

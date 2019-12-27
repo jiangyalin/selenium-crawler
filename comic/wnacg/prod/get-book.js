@@ -4,7 +4,7 @@ const zip = require('./zip')
 const clean = require('./../../../server/routes/clean')
 const Crawler = require('crawler')
 
-const getBook = (id, date, callback) => {
+const getBook = (id, date, callback, isUnit = false) => {
   const json = clean.get(id, date)
   const list = json.node
   const name = json.title
@@ -60,13 +60,15 @@ const getBook = (id, date, callback) => {
     // 已完全结束
     if (count === list.length) {
       zip()
-      // 记录数据
-      clean.set(id, date, {
-        localName: bookName,
-        isStorage: true
-      })
       // 全量刷新
-      search()
+      if (!isUnit) {
+        // 记录数据
+        clean.set(id, date, {
+          localName: bookName,
+          isStorage: true
+        })
+        search()
+      }
       callback()
     }
   }
