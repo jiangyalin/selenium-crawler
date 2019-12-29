@@ -1,6 +1,7 @@
 const fs = require('fs')
 
 const save = (time, node = [], name = '') => {
+  console.log('time', time)
   const path = './data/' + time + '.json'
   let data = {}
   if (fs.existsSync(path)) data = JSON.parse(fs.readFileSync(path, 'utf8'))
@@ -16,7 +17,12 @@ const save = (time, node = [], name = '') => {
     data = {
       ...data,
       node: data.node.map(item => {
-        if (item.title === name) return node
+        if (item.title === name) {
+          return {
+            ...item,
+            ...node
+          }
+        }
         return item
       })
     }
