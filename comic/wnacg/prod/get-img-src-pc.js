@@ -8,9 +8,8 @@ const key = ''
 
 async function example() {
   const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
-  const list = []
   try {
-    for (let n = 6689; n < 9999; n++) {
+    for (let n = 0; n < 9999; n++) {
       const url = 'https://www.wnacg.org/?ctl=albums&page=' + n + '&sname=' + key
       const _list = []
       await driver.get(url)
@@ -33,45 +32,55 @@ async function example() {
             date,
             isStorage: false,
             localName: '',
-            node: []
+            node: [],
+            isDown: false,
+            isOriginalIme: false,
+            downSrc: ''
           })
         }
       }
-      _list.forEach(item => {
-        console.log('item', item.date)
-      })
-      // 获取每一组
       for (let k = 0; k < _list.length; k++) {
-        await driver.get(_list[k].src)
-
-        // 获取每一页
-        for (let i = 0; i < Math.ceil(_list[k].size / 12); i++) {
-          let size = (_list[k].size - i * 12) >= 12 ? 12 : _list[k].size - i * 12
-
-          // 获取每一张图片
-          for (let j = 0; j < size; j++) {
-            if (await checkIsPresence(driver, 'ul.cc li:nth-of-type(' + (j + 1) + ') img')) {
-              const src = await driver.findElement(By.css('ul.cc li:nth-of-type(' + (j + 1) + ') img')).getAttribute('src')
-              _list[k].node.push({
-                page: i * 12 + j + 1,
-                src
-              })
-            }
-          }
-          if (i < Math.ceil(_list[k].size / 12) - 1) {
-            if (await checkIsPresence(driver, 'span.next a')) {
-              const next = await driver.findElement(By.css('span.next a')).getAttribute('href')
-              await driver.get(next)
-            } else {
-              i = Math.ceil(_list[k].size / 12)
-            }
-          }
+        if (!_list[k].isDown) {
+          const url = 'https://www.wnacg.org/download-index-aid-' + _list[k].id + '.html'
+          await driver.get(url)
+          const href = await driver.findElement(By.css('.download_btn .down_btn:nth-of-type(1)')).getAttribute('href')
+          console.log('item.id', _list[k].id)
+          console.log('href', href)
+          _list[k].downSrc = href
+          _list[k].isDown = true
         }
       }
+      // 获取每一组
+      // for (let k = 0; k < _list.length; k++) {
+      //   await driver.get(_list[k].src)
+      //
+      //   // 获取每一页
+      //   for (let i = 0; i < Math.ceil(_list[k].size / 12); i++) {
+      //     let size = (_list[k].size - i * 12) >= 12 ? 12 : _list[k].size - i * 12
+      //
+      //     // 获取每一张图片
+      //     for (let j = 0; j < size; j++) {
+      //       if (await checkIsPresence(driver, 'ul.cc li:nth-of-type(' + (j + 1) + ') img')) {
+      //         const src = await driver.findElement(By.css('ul.cc li:nth-of-type(' + (j + 1) + ') img')).getAttribute('src')
+      //         _list[k].node.push({
+      //           page: i * 12 + j + 1,
+      //           src
+      //         })
+      //       }
+      //     }
+      //     if (i < Math.ceil(_list[k].size / 12) - 1) {
+      //       if (await checkIsPresence(driver, 'span.next a')) {
+      //         const next = await driver.findElement(By.css('span.next a')).getAttribute('href')
+      //         await driver.get(next)
+      //       } else {
+      //         i = Math.ceil(_list[k].size / 12)
+      //       }
+      //     }
+      //   }
+      // }
       console.log('page', n)
       _list.forEach(item => {
         save(item.date, item, item.title)
-        list.push(item)
       })
     }
 
