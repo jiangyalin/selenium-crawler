@@ -1,4 +1,5 @@
 const fs = require('fs')
+const axios = require('axios')
 const clean = require('./../../../server/routes/clean')
 
 const getDown = async (driver, id, date, callback) => {
@@ -24,16 +25,27 @@ const getDown = async (driver, id, date, callback) => {
   const url = json.downSrc
   const downName = url.substring(url.lastIndexOf('/') + 1)
   await driver.setDownloadPath('D:\\down')
-  await driver.get(url)
-  console.log('downName', downName)
   const downFilePath = 'D:/down/' + downName
-  const time = setInterval(() => {
-    if (fs.existsSync(downFilePath)) {
-      fs.rename(downFilePath, 'D:/down/' + bookName + '.zip', () => {})
-      clearInterval(time)
-      callback()
-    }
-  }, 1000)
+  const status = await axios({
+    url,
+    method: 'get',
+    timeout: 1000 * 5
+  }).then(res => res).catch(err => err)
+  const checkError = status.toString().indexOf('Request failed with status code') !== -1
+  if (!checkError) {
+    await driver.get(url)
+    const time = setInterval(() => {
+      if (fs.existsSync(downFilePath)) {
+        setTimeout(() => {
+          fs.rename(downFilePath, 'D:/down/' + bookName + '.zip', () => {})
+          clearInterval(time)
+          callback()
+        }, 2000)
+      }
+    }, 1000)
+  } else {
+    callback()
+  }
 
 }
 

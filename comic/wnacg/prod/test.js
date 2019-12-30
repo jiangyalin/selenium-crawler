@@ -4,13 +4,13 @@ const { Builder } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const path = require('chromedriver').path // 必要，不能删除
 
-const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build()
+const driver = new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options().headless()).build()
 
 const updatedList = fs.readFileSync('./data/search.json', 'utf8')
 
 const node = JSON.parse(updatedList).node
 
-const arr = [node.map(item => item)[1], node.map(item => item)[2], node.map(item => item)[3], node.map(item => item)[4]]
+const arr = node.map(item => item)
 
 const queue = () => {
   if (arr.length) {

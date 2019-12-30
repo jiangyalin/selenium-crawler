@@ -1,3 +1,7 @@
+/*
+* 废弃
+* */
+
 // https://www.wnacg.org/photos-index-aid-90026.html
 const { Builder, By, Key, until } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
