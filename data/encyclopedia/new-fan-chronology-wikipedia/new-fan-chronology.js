@@ -13,10 +13,10 @@ const example = async callback => {
     const html = await driver.getPageSource()
     fs.writeFileSync('./index.html', html)
     console.log('正常结束')
-    callback()
   } finally {
     console.log('异常结束')
-    // driver.quit()
+    driver.quit()
+    callback()
   }
 }
 
