@@ -44,7 +44,7 @@ async function example() {
       node: list
     }))
     console.log('异常结束')
-    // driver.quit()
+    driver.quit()
   }
 }
 
