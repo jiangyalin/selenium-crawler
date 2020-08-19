@@ -8,6 +8,9 @@
 // 获取自定义属性
 // await btn.getAttribute('type')
 
+// 获取一组元素
+// await driver.findElements(By.css('.type'))
+
 // 获取元素填写表单
 // await driver.findElement(By.css('#app .login .login-container .el-form .el-form-item:nth-of-type(1) .el-input__inner')).sendKeys('yfbcsniya3')
 
@@ -25,3 +28,6 @@
 
 // 等待
 // await driver.sleep(5000)
+
+// 执行js代码
+// await driver.executeScript(js)
