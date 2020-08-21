@@ -1,9 +1,11 @@
+// 下载图片
 const fs = require('fs')
 const Crawler = require('crawler')
+const createFolder = require('./create-folder')
 
 const example = (list, bookName, callback) => {
   // 创建文件夹
-  if (!fs.existsSync('./file/' + bookName)) fs.mkdirSync('./file/' + bookName)
+  createFolder('./file/' + bookName)
   const crawler = new Crawler({
     encoding: null, // 编码
     maxConnections: 5, // 最大并发请求数
@@ -13,10 +15,9 @@ const example = (list, bookName, callback) => {
       done()
     }
   })
-
   const urls = []
   list.forEach(item => {
-    if (!fs.existsSync('./file/' + bookName + '/' + item.title)) fs.mkdirSync('./file/' + bookName + '/' + item.title)
+    createFolder('./file/' + bookName + '/' + item.title)
     item.img.forEach(node => {
       let url = {
         uri: node,

@@ -26,10 +26,10 @@ const example = async (url, callback) => {
     setTimeout(() => {
       callback(chapterList)
     }, 1000)
-    console.log('正常结束')
+    console.log('章节列表正常结束')
   } catch {
     driver.quit()
-    console.log('异常结束')
+    console.log('章节列表异常结束')
   }
 }
 

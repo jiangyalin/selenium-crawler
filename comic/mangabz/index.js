@@ -7,7 +7,7 @@ console.log('url', url)
 
 getChapter(url, wordList => {
   console.log('wordList', wordList)
-  getWords([wordList[0]], imgList => {
+  getWords(wordList, imgList => {
     console.log('imgList', imgList)
     downImg(imgList, title, () => {
 
