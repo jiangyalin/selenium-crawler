@@ -5,13 +5,12 @@ const tool = require('./../../tool')
 const updatedList = JSON.parse(fs.readFileSync('./list.json', 'utf8'))
 
 let name = 10000
-const node = updatedList.node.filter(item => item.href.indexOf('vol_0') === -1).map(item => {
+const node = updatedList.node.filter(item => item.href.indexOf('vol_0') !== -1).map(item => {
   return {
     ...item,
     name: name++
   }
 })
-// console.log('node', node)
 
 // 创建文件夹
 tool.createFolder('./file/' + updatedList.bookName)
@@ -28,7 +27,7 @@ let crawler = new Crawler({
 
 const urls = []
 node.filter(item => {
-  const pamphlet = Math.ceil((item.name - 10000 + 1) / 300) + 100
+  const pamphlet = 'vol_' + (Math.ceil((item.name - 10000 + 1) / 300) + 100)
   if (fs.existsSync('./file')) {
     if (fs.existsSync('./file/' + updatedList.bookName + '/' + pamphlet)) {
       if (fs.existsSync('./file/' + updatedList.bookName + '/' + pamphlet + '/' + item.name + '.jpg')) {
@@ -52,7 +51,7 @@ node.filter(item => {
 })
 
 const main = (res, name) => {
-  const pamphlet = Math.ceil((name - 10000 + 1) / 300) + 100
+  const pamphlet = 'vol_' + (Math.ceil((name - 10000 + 1) / 300) + 100)
   tool.createFolder('./file/' + updatedList.bookName + '/' + pamphlet)
   console.log('name', name)
   fs.writeFileSync('./file/' + updatedList.bookName + '/' + pamphlet + '/' + name + '.jpg', res.body)
