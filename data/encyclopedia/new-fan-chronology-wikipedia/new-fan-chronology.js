@@ -1,3 +1,4 @@
+// 抓取维基百科页面
 const { Builder } = require('selenium-webdriver')
 const chrome = require('selenium-webdriver/chrome')
 const path = require('chromedriver').path // 必要，不能删除

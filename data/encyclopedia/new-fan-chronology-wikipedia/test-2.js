@@ -1,30 +1,55 @@
 const fs = require('fs')
 const jsDom = require('jsdom').JSDOM
 const jquery = require('jquery')
+const cnchar = require('cnchar')
+const trad = require('cnchar-trad')
 
-const html = fs.readFileSync('./html/index_' + 2021 + '.html', 'utf8')
+cnchar.use(trad)
+
+const html = fs.readFileSync('./html/index_' + 2000 + '.html', 'utf8')
 const $ = jquery(new jsDom(html).window)
 
-const i = 6
+const keyMap = {
+  '开始日－结束日': 'startEndTime',
+  '開始日－結束日': 'startEndTime',
+  '開始日 - 結束日': 'startEndTime',
+  作品名: 'name',
+  中文譯名: 'name',
+  原名: 'formerName',
+  制作公司: 'company',
+  製作公司: 'company',
+  動畫製作: 'company',
+  话数: 'size',
+  話數: 'size',
+  上映日: 'startDate',
+  发售日期: 'startDate',
+  發售日: 'startDate',
+  發售日期: 'startDate',
+  發行日期: 'startDate',
+  开始发售日: 'startDate',
+  開始發售日: 'startDate',
+  首播日期: 'startDate',
+  首播日期月: 'startDate',
+  '1月－3月': '电视动画',
+  '4月－6月': '电视动画',
+  '7月－9月': '电视动画',
+  '10月－12月': '电视动画'
+}
+
+const i = 0
 const j = 2
 
-const table = $('#bodyContent .wikitable').eq(i)
-// const name = table.find('tr').eq(j).find('td').eq(2).text()
-// const type = table.prev().find('.mw-headline').text()
-//
-// console.log('table', table)
-// console.log('name', name)
-// console.log('type', type)
+const tableDom = $('#bodyContent .wikitable').eq(i)
 
 // html转二维数组
 const jQueryToArr = table => {
   const arr = []
-  for (let i = 1; i < table.find('tr').length; i++) {
+  for (let i = 0; i < table.find('tr').length; i++) {
     const tr = table.find('tr').eq(i)
     arr.push([])
     for (let j = 0; j < tr.find('td').length; j++) {
       const td = tr.find('td').eq(j)
-      arr[i - 1].push({
+      arr[i].push({
         rowspan: Number(td.attr('rowspan') || 1),
         colspan: Number(td.attr('colspan') || 1),
         text: td.text()
@@ -52,29 +77,64 @@ const tableDataFormat = arrData => {
   })
 }
 
-const tableDataSimplify = tableData => tableData.map(item => item.map(node => node.text))
+// 表格数据映射key
+const tableDataMapKey = (arrData, table) => {
+  const _arrData = arrData.filter(item => item.length > 1)
+  return _arrData.map(item => {
+    return item.map((node, j) => {
+      let keyHtmlText = trim(table.find('tr').eq(0).find('th').eq(j).text())
+      if (keyHtmlText.includes('(')) keyHtmlText = keyHtmlText.substring(0, keyHtmlText.indexOf('(')) + keyHtmlText.substring(keyHtmlText.indexOf(')') + 2)
+      return {
+        ...node,
+        key: keyMap[keyHtmlText],
+        test: table.find('tr').eq(0).find('th').eq(j).text(),
+        keyHtmlText
+      }
+    })
+  })
+}
+
+// 获取表格大类
+const getTableType = dom => {
+  let _dom = dom
+  for (let i = 0; i < 10; i++) {
+    if (_dom.prev().find('.mw-headline').text()) {
+      return _dom.prev().find('.mw-headline').text()
+    }
+    _dom = _dom.prev()
+  }
+  return ''
+}
 
 const trim = str => str.replace(/(^\s*)|(\s*$)/g, '')
 
-const table1 = jQueryToArr(table)
-console.log('table1', table1[63])
+const index = 0
+
+const table1 = jQueryToArr(tableDom)
+console.log('table1', table1[index])
 const table2 = tableDataFormat(table1)
-console.log('table2', table2[63])
+console.log('table2', table2[index])
+const tableData = tableDataMapKey(table2, tableDom)
+console.log('tableData', tableData[index])
 
-const tableData = tableDataSimplify(table2)
-console.log('tableData', tableData[63])
-const rowData = tableData[63]
+const rowData = tableData[index]
 
-const date = trim(rowData[0] || '')
+const dataMap = {}
+rowData.forEach(item => dataMap[item.key] = item.text)
+
+let date = trim(dataMap.startDate || '') || ''
+if (!date) date = trim(dataMap.startEndTime || '') || ''
+
 let obj = {
-  year: 2021,
+  year: 2000,
   month: date.substring(0, date.indexOf('月')),
   date,
-  // name: cnchar.convert.tradToSimple(trim(rowData[1] || '')),
-  formerName: rowData[2] || '',
-  // type: tableDom.prev().find('.mw-headline').text(), // mw-headline
-  company: trim(rowData[3] || ''),
-  size: trim(rowData[4] || '')
+  name: cnchar.convert.tradToSimple(trim(dataMap.name || '') || ''),
+  formerName: dataMap.formerName || '',
+  type: keyMap[getTableType(tableDom)] || getTableType(tableDom), // mw-headline
+  company: trim(dataMap.company || '') || '',
+  size: trim(dataMap.size || '') || ''
 }
 
+console.log('table', tableData.length)
 console.log('jQueryToArr', obj)
